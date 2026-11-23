@@ -11,3 +11,6 @@ do $$ declare t text; begin
     execute format('create policy "demo access" on %I for all using (true) with check (true)', t);
   end loop;
 end $$;
+-- Newer Supabase projects don't grant API roles access to new tables automatically.
+grant usage on schema public to anon, authenticated;
+grant select, insert, update, delete on all tables in schema public to anon, authenticated;
