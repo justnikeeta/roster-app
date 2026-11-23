@@ -33,3 +33,21 @@ for (let b = 0; b < 25; b++) {
     cfg.forEach(([nm, cal, min, ix]) => add(brand, nm, cal, min, ix.map(i => ids[i])));
   }
 }
+
+export const seedLeaves = ['E22|2026-12-08', 'E25|2026-12-14', 'E27|2026-12-17'];
+export const SEED = {
+  pods: pods.map(id => ({ id, lead: podLeads[id] })),
+  employees: [...employees], processes: [...processes], assigns: [...assigns],
+  holidays: [...holidays], leaves: seedLeaves,
+};
+interface Rows { pods: { id: string; lead: string }[]; employees: Employee[]; processes: Process[]; assigns: { emp: string; proc: string }[]; holidays: string[] }
+// The engine reads these module-level arrays, so the database loader swaps their contents in place.
+export const loadData = (d: Rows) => {
+  pods.splice(0, pods.length, ...d.pods.map(p => p.id));
+  Object.keys(podLeads).forEach(k => { delete podLeads[k]; });
+  d.pods.forEach(p => { podLeads[p.id] = p.lead; });
+  employees.splice(0, employees.length, ...d.employees);
+  processes.splice(0, processes.length, ...d.processes);
+  assigns.splice(0, assigns.length, ...d.assigns);
+  holidays.splice(0, holidays.length, ...d.holidays);
+};

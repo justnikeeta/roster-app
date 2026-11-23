@@ -23,3 +23,6 @@ Each employee gets one weekly off per Mon-Sun week; a day when none of their pro
 6. **Automated vs human:** offs and validation are automated; leave approval, backups and final publish stay with the manager.
 7. **2x scale:** move to Postgres, use a CP-SAT solver for the solve, and re-solve only the affected weeks.
 8. **One more week:** database + add/edit screens, comp-offs, approvals, CSV export.
+
+## Database (Supabase)
+Run `supabase/schema.sql` in the Supabase SQL editor, then set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (see `.env.example`). On first load the app seeds the sample data. Employees, processes (brands, calendars, min staff), assignments and holidays are edited in the "Manage data" panel; leaves are saved too. The roster itself is regenerated from this data, so manual cell edits are not stored. Access is open (no login) for demo purposes.
